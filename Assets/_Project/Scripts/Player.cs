@@ -325,6 +325,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(1f);
         lapText.text = "You Win - Next Course in 1";
         yield return new WaitForSeconds(1f);
+        LevelManager.LoadNext();
     }
 
     private IEnumerator Boost()
