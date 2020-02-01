@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
+    
 public class Player : MonoBehaviour
 {
     private MeshCollider collider;
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour
     private bool boosted;
     private Image healthbarimage;
     private Image ammobarimage;
+    private TextMeshProUGUI lapText;
 
     public enum EnumShipType
     {
@@ -27,6 +29,7 @@ public class Player : MonoBehaviour
     public GameObject Spawn;
     public GameObject Explosion;
     public GameObject CountDown;
+    public GameObject LapCount;
     public GameObject healthbar;
     public GameObject ammobar;
     public GameObject damaged;
@@ -41,29 +44,32 @@ public class Player : MonoBehaviour
     public float fireRate = 1f;
     public float lastFireTime;
     public bool Shooting;
+    public int currentCheckpoint = 0;
+    public List<bool> PassedCheckpoints;
+    public int lap = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        Dead = true;
+        LevelManager.RoundOver = true;
         body = GetComponent<Rigidbody>();
         collider = GetComponent<MeshCollider>();
 
         healthbarimage = healthbar.GetComponent<Image>();
         ammobarimage = ammobar.GetComponent<Image>();
+        lapText = LapCount.GetComponent<TextMeshProUGUI>();
 
         StartCoroutine(GameStart());
     }
 
     private void FixedUpdate()
     {
-        if (Dead) return;
+        if (Dead || LevelManager.RoundOver) return;
 
         if (shipType == EnumShipType.Red)
         {
             if (Input.GetKey(KeyCode.W))
             {
-                //transform.Translate(Vector3.forward * -1 * Time.deltaTime * speed);
                 body.AddForce(transform.forward * speed);
             }
 
@@ -72,7 +78,6 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.UpArrow))
             {
-                //transform.Translate(Vector3.forward * -1 * Time.deltaTime * speed);
                 body.AddForce(transform.forward * speed);
             }
         }
@@ -94,7 +99,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        if (Dead) return;
+        if (Dead || LevelManager.RoundOver) return;
 
         if (shipType == EnumShipType.Red)
         {
@@ -168,8 +173,43 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "powerup")
         {
-            //print($"powerup: {other.name}");
+            print($"powerup: {other.name}");
         }
+
+        if(other.tag == "checkpoint")
+        {
+            print("checkpoint");
+
+            var index = CheckpointManager.Checkpoints.IndexOf(other.gameObject);
+            if(index == currentCheckpoint)
+            {
+                print($"checkpoint passed: {currentCheckpoint}");
+                if(currentCheckpoint == 0)
+                {
+                    StartCoroutine(ShowLap());
+                }
+
+                ++currentCheckpoint;
+                                
+                if(currentCheckpoint >= CheckpointManager.Checkpoints.Count)
+                {
+                    currentCheckpoint = 0;
+                    ++lap;
+
+                    if(lap == 3)
+                    {
+                        StartCoroutine(NextRound());
+                    }
+                }
+            }
+        }
+    }
+
+    private IEnumerator ShowLap()
+    {
+        lapText.text = $"Lap {lap}";
+        yield return new WaitForSeconds(3f);
+        lapText.text = "";
     }
 
     void OnTriggerStay(Collider other)
@@ -261,7 +301,6 @@ public class Player : MonoBehaviour
     {
         body.velocity = Vector3.zero;
         TextMeshProUGUI countDownText = CountDown.GetComponent<TextMeshProUGUI>();
-
         yield return new WaitForSeconds(1f);
         countDownText.text = "3";
         yield return new WaitForSeconds(1f);
@@ -271,7 +310,21 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(1f);
         countDownText.text = "";
 
-        Dead = false;
+        LevelManager.RoundOver = false;
+    }
+
+    private IEnumerator NextRound()
+    {
+        LevelManager.RoundOver = true;
+        body.velocity = Vector3.zero;
+        collider.enabled = false;
+        lapText.text = "You Win - Next Course in 3";
+        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f);
+        lapText.text = "You Win - Next Course in 2";
+        yield return new WaitForSeconds(1f);
+        lapText.text = "You Win - Next Course in 1";
+        yield return new WaitForSeconds(1f);
     }
 
     private IEnumerator Boost()
