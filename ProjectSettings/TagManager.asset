@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - mothership
+  - ship
+  - buildings
+  - blue ship
+  - red ship
+  - red mothership
+  - blue mothership
   layers:
   - Default
   - TransparentFX
