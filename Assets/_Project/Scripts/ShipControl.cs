@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShipControl : MonoBehaviour
 {
-    private RigidBody body;
+    private Rigidbody body;
 
     public enum EnumShipType
     {
@@ -19,7 +19,7 @@ public class ShipControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        body = GetComponent<RigidBody>();
+        body = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
