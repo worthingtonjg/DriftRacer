@@ -11,6 +11,8 @@ TagManager:
   - red ship
   - red mothership
   - blue mothership
+  - blue drone
+  - red drone
   layers:
   - Default
   - TransparentFX
