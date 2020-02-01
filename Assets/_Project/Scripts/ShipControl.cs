@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ShipControl : MonoBehaviour
 {
+    private RigidBody body;
+
     public enum EnumShipType
     {
         Red,
@@ -17,7 +19,7 @@ public class ShipControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        body = GetComponent<RigidBody>();
     }
 
     // Update is called once per frame
@@ -28,15 +30,18 @@ public class ShipControl : MonoBehaviour
             if (Input.GetKey(KeyCode.D))
             {
                 //transform.Translate(Vector3.left * Time.deltaTime * speed);
-                transform.Rotate(Vector3.up, 10f * Time.deltaTime * rotationSpeed, Space.Self);
+                transform.Rotate(Vector3.up, rotationSpeed);
             }
             if (Input.GetKey(KeyCode.W))
             {
-                transform.Translate(transform.forward * Time.deltaTime * speed);
+                //transform.Translate(Vector3.forward * -1 * Time.deltaTime * speed);
+                body.AddForce(transform.forward * speed);
+
             }
             if (Input.GetKey(KeyCode.A))
             {
                 //transform.Translate(Vector3.right * Time.deltaTime * speed);
+                transform.Rotate(Vector3.up, -1 * rotationSpeed);
             }
         }
         else
