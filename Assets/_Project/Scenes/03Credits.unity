@@ -1407,6 +1407,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: red player
       objectReference: {fileID: 0}
+    - target: {fileID: 1656975848628821941, guid: f12e7062f686de8468601e4d29cbd00a,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7336786159999753033, guid: f12e7062f686de8468601e4d29cbd00a,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f12e7062f686de8468601e4d29cbd00a, type: 3}
 --- !u!1001 &7925662170593805819
