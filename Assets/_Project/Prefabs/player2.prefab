@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8693501203208666786}
   m_Layer: 0
   m_Name: player2
-  m_TagString: blue drone
+  m_TagString: player2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,10 +108,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e553c724b08ac0459352ad6fb61c01b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipType: 1
-  speed: 10
+  shipType: 0
+  speed: 20
   rotationSpeed: 1
-  maxspeed: 10
+  maxspeed: 20
+  Spawn: {fileID: 0}
+  Explosion: {fileID: 4986351891419587258, guid: 6eab2b546242f0e458ae67c10afa8ec1,
+    type: 3}
+  CountDown: {fileID: 0}
 --- !u!54 &8693501203208666786
 Rigidbody:
   m_ObjectHideFlags: 0

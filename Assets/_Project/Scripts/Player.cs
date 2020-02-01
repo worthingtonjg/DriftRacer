@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     private Rigidbody body;
+    private bool Dead;
+    private Image healthbarimage;
 
     public enum EnumShipType
     {
@@ -18,15 +22,26 @@ public class Player : MonoBehaviour
     public float maxspeed = 1f;
     public GameObject Spawn;
     public GameObject Explosion;
+    public GameObject CountDown;
+    public GameObject healthbar;
+    public GameObject damaged;
+    public float maxhealth = 100f;
+    public float health = 100f;
+    public float damage = 25f;
 
     // Start is called before the first frame update
     void Start()
     {
+        Dead = true;
         body = GetComponent<Rigidbody>();
+        healthbarimage = healthbar.GetComponent<Image>();
+        StartCoroutine(GameStart());
     }
 
     private void FixedUpdate()
     {
+        if (Dead) return;
+
         if (shipType == EnumShipType.Red)
         {
             if (Input.GetKey(KeyCode.W))
@@ -52,6 +67,8 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        if (Dead) return;
+
         if (shipType == EnumShipType.Red)
         {
             if (Input.GetKey(KeyCode.D))
@@ -80,13 +97,87 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        health = health - damage;
+        UpdateHealthBar();
+        StartCoroutine(Showdamage());
+        if (health <= 0)
+        {
+            StartCoroutine(Death());
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        print(other.name);
-        if (Spawn != null)
+        if (other.tag == "powerup")
         {
-            transform.position = new Vector3(Spawn.transform.position.x, transform.position.y, Spawn.transform.position.z);
-            body.velocity = Vector3.zero;
+            print($"powerup: {other.name}");
         }
+    }
+
+    private void UpdateHealthBar()
+    {
+        healthbarimage.fillAmount = health / maxhealth;
+    }
+    private IEnumerator Showdamage()
+    {
+        damaged.SetActive(true);
+        yield return new WaitForSeconds(.3f);
+        damaged.SetActive(false);
+    }
+
+    private IEnumerator Death()
+    {
+        if (Dead) yield break;
+
+        Dead = true;
+        body.velocity = Vector3.zero;
+        GetComponent<Renderer>().enabled = false;
+        TextMeshProUGUI countDownText = CountDown.GetComponent<TextMeshProUGUI>();
+
+        if (Explosion != null)
+        {
+            var prefab = Instantiate(Explosion, transform.position, Quaternion.identity);
+            
+            
+            Destroy(
+                prefab,
+                .3f
+            );
+
+        }
+
+        yield return new WaitForSeconds(1f);
+        countDownText.text = "3";
+        yield return new WaitForSeconds(1f);
+        countDownText.text = "2";
+        yield return new WaitForSeconds(1f);
+        countDownText.text = "1";
+        yield return new WaitForSeconds(1f);
+        countDownText.text = "";
+
+        //transform.position = new Vector3(Spawn.transform.position.x, transform.position.y, Spawn.transform.position.z);
+        GetComponent<Renderer>().enabled = true;
+        Dead = false;
+        health = maxhealth;
+        UpdateHealthBar();
+    }
+
+    private IEnumerator GameStart()
+    {
+        body.velocity = Vector3.zero;
+        TextMeshProUGUI countDownText = CountDown.GetComponent<TextMeshProUGUI>();
+
+        yield return new WaitForSeconds(1f);
+        countDownText.text = "3";
+        yield return new WaitForSeconds(1f);
+        countDownText.text = "2";
+        yield return new WaitForSeconds(1f);
+        countDownText.text = "1";
+        yield return new WaitForSeconds(1f);
+        countDownText.text = "";
+
+        Dead = false;
     }
 }
