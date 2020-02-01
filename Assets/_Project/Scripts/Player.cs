@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public float rotationSpeed = 30f;
     public float maxspeed = 1f;
     public GameObject Spawn;
+    public GameObject Explosion;
 
     // Start is called before the first frame update
     void Start()
