@@ -100,13 +100,11 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.D))
             {
-                //transform.Translate(Vector3.left * Time.deltaTime * speed);
-                transform.Rotate(Vector3.up, rotationSpeed);
+                transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
             }
             if (Input.GetKey(KeyCode.A))
             {
-                //transform.Translate(Vector3.right * Time.deltaTime * speed);
-                transform.Rotate(Vector3.up, -1 * rotationSpeed);
+                transform.Rotate(Vector3.up, -1 * rotationSpeed * Time.deltaTime);
             }
             if(Input.GetKey(KeyCode.LeftShift))
             {
@@ -118,13 +116,11 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                //transform.Translate(Vector3.left * Time.deltaTime * speed);
-                transform.Rotate(Vector3.up, rotationSpeed);
+                transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
             }
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                //transform.Translate(Vector3.right * Time.deltaTime * speed);
-                transform.Rotate(Vector3.up, -1 * rotationSpeed);
+                transform.Rotate(Vector3.up, -1 * rotationSpeed * Time.deltaTime);
             }
             if(Input.GetKey(KeyCode.RightShift))
             {

@@ -1668,6 +1668,11 @@ PrefabInstance:
       propertyPath: fireRate
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 1136203871367287819, guid: b51717ac677b4314c8924071df4ad9cc,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 7925662171969172816, guid: b51717ac677b4314c8924071df4ad9cc,
         type: 3}
       propertyPath: m_IsTrigger
@@ -2651,6 +2656,11 @@ PrefabInstance:
         type: 3}
       propertyPath: fireRate
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566986510609813292, guid: f12e7062f686de8468601e4d29cbd00a,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f12e7062f686de8468601e4d29cbd00a, type: 3}
