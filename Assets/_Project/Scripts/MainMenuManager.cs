@@ -7,8 +7,6 @@ public class MainMenuManager : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("02GamePlay");
-
         LevelManager.Player1Life = 20;
         LevelManager.Player1Win = false;
         LevelManager.Player1MaxHealth = 100;
@@ -25,6 +23,7 @@ public class MainMenuManager : MonoBehaviour
         LevelManager.Player2Score = 0;
         LevelManager.Player2Parts = 0;
 
+        SceneManager.LoadScene("01MainMenuA");
     }
     public void Credits()
     {

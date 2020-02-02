@@ -8,6 +8,7 @@ using System.Linq;
 
 public class Player : MonoBehaviour
 {
+    private GameObject shipObject;
     private MeshCollider collider;
     private Rigidbody body;
     private bool Dead;
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour
     }
 
     public EnumShipType shipType;
+    public List<GameObject> ships;
     public float speed = 10f;
     public float boostSpeed = 50f;
     public float rotationSpeed = 30f;
@@ -58,8 +60,16 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        foreach(var ship in ships)
+        {
+            ship.SetActive(false);
+        }
+
+
         if(shipType == EnumShipType.Red)
         {
+            shipObject = ships[LevelManager.Player1Ship];
+
             ammo = LevelManager.Player1MaxAmmo;
             maxammo = LevelManager.Player1MaxAmmo;
             health = LevelManager.Player1MaxHealth;
@@ -70,6 +80,8 @@ public class Player : MonoBehaviour
         }
         else
         {
+            shipObject = ships[LevelManager.Player2Ship];
+
             ammo = LevelManager.Player2MaxAmmo;
             maxammo = LevelManager.Player2MaxAmmo;
             health = LevelManager.Player2MaxHealth;
@@ -78,6 +90,8 @@ public class Player : MonoBehaviour
             LevelManager.Player2Powerups = 0;
             Dead = LevelManager.Player1Life <= 0;
         }
+
+        shipObject.SetActive(true);
 
         LevelManager.RoundOver = true;
         body = GetComponent<Rigidbody>();
@@ -145,7 +159,7 @@ public class Player : MonoBehaviour
             {
                 transform.Rotate(Vector3.up, -1 * rotationSpeed * Time.deltaTime);
             }
-            if(Input.GetKey(KeyCode.LeftShift))
+            if(Input.GetKey(KeyCode.Space))
             {
                 StartCoroutine(Shoot());
 
@@ -161,7 +175,7 @@ public class Player : MonoBehaviour
             {
                 transform.Rotate(Vector3.up, -1 * rotationSpeed * Time.deltaTime);
             }
-            if(Input.GetKey(KeyCode.RightShift))
+            if(Input.GetKey(KeyCode.Keypad0))
             {
                 StartCoroutine(Shoot());
             }            
@@ -354,7 +368,8 @@ public class Player : MonoBehaviour
         collider.enabled = false;
         body.detectCollisions = false;
         body.velocity = Vector3.zero;
-        GetComponent<Renderer>().enabled = false;
+        shipObject.SetActive(false);
+
         TextMeshProUGUI countDownText = CountDown.GetComponent<TextMeshProUGUI>();
         if (Explosion != null)
         {
@@ -377,8 +392,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(1f);
         countDownText.text = "";
 
-        //transform.position = new Vector3(Spawn.transform.position.x, transform.position.y, Spawn.transform.position.z);
-        GetComponent<Renderer>().enabled = true;
+        shipObject.SetActive(true);
         body.detectCollisions = true;
         collider.enabled = true;
 

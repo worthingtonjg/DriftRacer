@@ -7,6 +7,9 @@ public class LevelManager : MonoBehaviour
 {
     public static bool RoundOver;
 
+    public static int Player1Ship;
+    public static int Player2Ship;
+
     public static float Player1MaxHealth;
     public static float Player2MaxHealth;
 
