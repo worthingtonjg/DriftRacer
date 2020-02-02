@@ -2792,7 +2792,7 @@ GameObject:
   - component: {fileID: 782134946}
   - component: {fileID: 782134945}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: LevelManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2810,7 +2810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc6f8f991c50d054b98b34e40dfe02d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextLevel: 03Credits
+  NextLevel: 02GamePlay03
 --- !u!4 &782134946
 Transform:
   m_ObjectHideFlags: 0
