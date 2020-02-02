@@ -58,16 +58,25 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(LevelManager.Player1Life == 0)
+        if(shipType == EnumShipType.Red)
         {
-            LevelManager.Player1Life = 20;
+            ammo = LevelManager.Player1MaxAmmo;
+            maxammo = LevelManager.Player1MaxAmmo;
+            health = LevelManager.Player1MaxHealth;
+            maxhealth = LevelManager.Player1MaxHealth;
             LevelManager.Player1Win = false;
+            LevelManager.Player1Powerups = 0;
+            Dead = LevelManager.Player1Life <= 0;
         }
-
-        if(LevelManager.Player2Life == 0)
+        else
         {
-            LevelManager.Player2Life = 20;
+            ammo = LevelManager.Player2MaxAmmo;
+            maxammo = LevelManager.Player2MaxAmmo;
+            health = LevelManager.Player2MaxHealth;
+            maxhealth = LevelManager.Player2MaxHealth;
             LevelManager.Player2Win = false;
+            LevelManager.Player2Powerups = 0;
+            Dead = LevelManager.Player1Life <= 0;
         }
 
         LevelManager.RoundOver = true;
@@ -81,6 +90,8 @@ public class Player : MonoBehaviour
         lifeText = LifeCount.GetComponent<Text>();
 
         UpdateLife();
+        UpdateAmmo();
+        UpdateHealthBar();
 
         StartCoroutine(GameStart());
     }
@@ -171,8 +182,8 @@ public class Player : MonoBehaviour
         {
             ammo = 0;
         }
-        ammobarimage.fillAmount = ammo / maxammo;
 
+        UpdateAmmo();
         audioSource.PlayOneShot(clips.FirstOrDefault(c => c.name == "shoot"));
         bulletBody.AddForce(transform.forward * bulletSpeed);
         Destroy(bulletPrefab, 3f);
@@ -283,7 +294,7 @@ public class Player : MonoBehaviour
                     if (ammo <= maxammo)
                     {
                         ammo += 1;
-                        ammobarimage.fillAmount = ammo / maxammo;
+                        UpdateAmmo();
                     }
 
                     break;
@@ -296,6 +307,19 @@ public class Player : MonoBehaviour
     private void UpdateHealthBar()
     {
         healthbarimage.fillAmount = health / maxhealth;
+    }
+
+    private void UpdateAmmo()
+    {
+        if (shipType == EnumShipType.Red)
+        {
+            ammobarimage.fillAmount = ammo / LevelManager.Player1MaxAmmo;
+        }
+        else
+        {
+            ammobarimage.fillAmount = ammo / LevelManager.Player2MaxAmmo;
+
+        }
     }
 
     private void UpdateLife(int? life = null)
@@ -391,6 +415,15 @@ public class Player : MonoBehaviour
     private IEnumerator NextRound()
     {
         LevelManager.RoundOver = true;
+        if (shipType == EnumShipType.Red)
+        {
+            LevelManager.Player1Win = true;
+        }
+        else
+        {
+            LevelManager.Player2Win = true;
+        }
+
         body.velocity = Vector3.zero;
         collider.enabled = false;
         lapText.text = "You Win - Next Course in 3";
