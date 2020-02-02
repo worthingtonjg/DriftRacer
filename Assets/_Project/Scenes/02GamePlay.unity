@@ -2229,7 +2229,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Healh
+  m_Text: Health
 --- !u!222 &1125889457
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3555,7 +3555,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Healh
+  m_Text: "Health\t"
 --- !u!222 &1657093678
 CanvasRenderer:
   m_ObjectHideFlags: 0
