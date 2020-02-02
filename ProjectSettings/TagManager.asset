@@ -17,6 +17,7 @@ TagManager:
   - player2
   - powerup
   - checkpoint
+  - pickup
   layers:
   - Default
   - TransparentFX

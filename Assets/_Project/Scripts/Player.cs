@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     private Image healthbarimage;
     private Image ammobarimage;
     private TextMeshProUGUI lapText;
+    private Text partsText;
+    private Text lifeText;
 
     public enum EnumShipType
     {
@@ -32,6 +34,8 @@ public class Player : MonoBehaviour
     public GameObject LapCount;
     public GameObject healthbar;
     public GameObject ammobar;
+    public GameObject PartsCount;
+    public GameObject LifeCount;
     public GameObject damaged;
     public GameObject WeaponPort;
     public GameObject Bullet;
@@ -51,13 +55,29 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(LevelManager.Player1Life == 0)
+        {
+            LevelManager.Player1Life = 20;
+            LevelManager.Player1Win = false;
+        }
+
+        if(LevelManager.Player2Life == 0)
+        {
+            LevelManager.Player2Life = 20;
+            LevelManager.Player2Win = false;
+        }
+
         LevelManager.RoundOver = true;
         body = GetComponent<Rigidbody>();
         collider = GetComponent<MeshCollider>();
-
+        
         healthbarimage = healthbar.GetComponent<Image>();
         ammobarimage = ammobar.GetComponent<Image>();
         lapText = LapCount.GetComponent<TextMeshProUGUI>();
+        partsText = PartsCount.GetComponent<Text>();
+        lifeText = LifeCount.GetComponent<Text>();
+
+        UpdateLife();
 
         StartCoroutine(GameStart());
     }
@@ -174,6 +194,32 @@ public class Player : MonoBehaviour
         if (other.tag == "powerup")
         {
             print($"powerup: {other.name}");
+            if(shipType == EnumShipType.Red)
+            {
+                ++LevelManager.Player1Powerups;
+            }
+            else
+            {
+                ++LevelManager.Player2Powerups;
+            }
+        }
+
+        if(other.tag == "pickup")
+        {
+            if(shipType == EnumShipType.Red)
+            {
+                ++LevelManager.Player1Parts;
+                partsText.text = LevelManager.Player1Parts.ToString();
+            }
+            else
+            {
+                ++LevelManager.Player2Parts;
+                partsText.text = LevelManager.Player2Parts.ToString();
+            }
+
+            
+
+            Destroy(other.gameObject);
         }
 
         if(other.tag == "checkpoint")
@@ -246,6 +292,21 @@ public class Player : MonoBehaviour
     {
         healthbarimage.fillAmount = health / maxhealth;
     }
+
+    private void UpdateLife(int? life = null)
+    {
+        if (shipType == EnumShipType.Red)
+        {
+            LevelManager.Player1Life -= life ?? 0;
+            lifeText.text = LevelManager.Player1Life.ToString();
+        }
+        else
+        {
+            LevelManager.Player2Life -= life ?? 0;
+            lifeText.text = LevelManager.Player2Life.ToString();
+        }
+    }
+
     private IEnumerator Showdamage()
     {
         damaged.SetActive(true);
@@ -259,13 +320,13 @@ public class Player : MonoBehaviour
 
         boosted = false;
         Dead = true;
+        UpdateLife(1);
 
         collider.enabled = false;
         body.detectCollisions = false;
         body.velocity = Vector3.zero;
         GetComponent<Renderer>().enabled = false;
         TextMeshProUGUI countDownText = CountDown.GetComponent<TextMeshProUGUI>();
-
         if (Explosion != null)
         {
             var prefab = Instantiate(Explosion, transform.position, Quaternion.identity);
