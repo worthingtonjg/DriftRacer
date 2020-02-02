@@ -60,11 +60,12 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        LevelManager.Init();
+
         foreach(var ship in ships)
         {
             ship.SetActive(false);
         }
-
 
         if(shipType == EnumShipType.Red)
         {

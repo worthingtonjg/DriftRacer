@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 145567759825294921}
   - component: {fileID: 145567759825294920}
   - component: {fileID: 145567759825294923}
-  - component: {fileID: 145567759825294922}
   - component: {fileID: 7682578233855856792}
+  - component: {fileID: 2032697279741128551}
   m_Layer: 0
-  m_Name: blue mothership
+  m_Name: player2_mother
   m_TagString: blue mothership
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,20 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &145567759825294922
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 145567759825294917}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &7682578233855856792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,3 +93,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016ad9175aca7ad4fb60abf4c91d45a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &2032697279741128551
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145567759825294917}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 4
+  m_Height: 10
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
