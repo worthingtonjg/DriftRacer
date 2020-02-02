@@ -22,7 +22,13 @@ EditorBuildSettings:
     guid: 264b0edad4d9af64ca06433d66768d34
   - enabled: 1
     path: Assets/_Project/Scenes/02GamePlay03A.unity
-    guid: 4af61833ce76e1d4aae843b0636631c6
+    guid: 044dc62b3aa266545b96647a9fff972a
+  - enabled: 1
+    path: Assets/_Project/Scenes/02GamePlay03B.unity
+    guid: ba6799752008fc7419f5a84cb1d97878
+  - enabled: 1
+    path: Assets/_Project/Scenes/02GamePlay04.unity
+    guid: 2ff800e4ac565e34a9afe6ee9747c859
   - enabled: 1
     path: Assets/_Project/Scenes/03Credits.unity
     guid: 8c6309f0199f26c4fbccec145ceea7fd

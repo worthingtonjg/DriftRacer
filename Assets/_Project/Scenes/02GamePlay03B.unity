@@ -3788,7 +3788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc6f8f991c50d054b98b34e40dfe02d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextLevel: 03Credits
+  NextLevel: 02GamePlay04
 --- !u!4 &1460078864
 Transform:
   m_ObjectHideFlags: 0
