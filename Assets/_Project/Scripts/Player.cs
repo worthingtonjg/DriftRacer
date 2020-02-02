@@ -4,7 +4,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-    
+using System.Linq;
+
 public class Player : MonoBehaviour
 {
     private MeshCollider collider;
@@ -39,6 +40,8 @@ public class Player : MonoBehaviour
     public GameObject damaged;
     public GameObject WeaponPort;
     public GameObject Bullet;
+    public AudioSource audioSource;
+    public List<AudioClip> clips;
     public float maxhealth = 100f;
     public float health = 100f;
     public float ammo = 5f;
@@ -170,7 +173,7 @@ public class Player : MonoBehaviour
         }
         ammobarimage.fillAmount = ammo / maxammo;
 
-
+        audioSource.PlayOneShot(clips.FirstOrDefault(c => c.name == "shoot"));
         bulletBody.AddForce(transform.forward * bulletSpeed);
         Destroy(bulletPrefab, 3f);
 
@@ -183,6 +186,7 @@ public class Player : MonoBehaviour
         health = health - damage;
         UpdateHealthBar();
         StartCoroutine(Showdamage());
+        audioSource.PlayOneShot(clips.FirstOrDefault(c => c.name == "hit"));
         if (health <= 0)
         {
             StartCoroutine(Death());
@@ -202,6 +206,7 @@ public class Player : MonoBehaviour
             {
                 ++LevelManager.Player2Powerups;
             }
+            audioSource.PlayOneShot(clips.FirstOrDefault(c => c.name == "powerup"));
         }
 
         if(other.tag == "pickup")
@@ -216,8 +221,7 @@ public class Player : MonoBehaviour
                 ++LevelManager.Player2Parts;
                 partsText.text = LevelManager.Player2Parts.ToString();
             }
-
-            
+            audioSource.PlayOneShot(clips.FirstOrDefault(c => c.name == "pickup"));
 
             Destroy(other.gameObject);
         }
@@ -284,6 +288,7 @@ public class Player : MonoBehaviour
 
                     break;
             }
+
             print(other.name);
         }
     }    
@@ -330,8 +335,8 @@ public class Player : MonoBehaviour
         if (Explosion != null)
         {
             var prefab = Instantiate(Explosion, transform.position, Quaternion.identity);
-            
-            
+            audioSource.PlayOneShot(clips.FirstOrDefault(c => c.name == "explosion"));
+
             Destroy(
                 prefab,
                 .3f
@@ -364,14 +369,23 @@ public class Player : MonoBehaviour
         TextMeshProUGUI countDownText = CountDown.GetComponent<TextMeshProUGUI>();
         yield return new WaitForSeconds(1f);
         countDownText.text = "3";
+        audioSource.PlayOneShot(clips.FirstOrDefault(c => c.name == "count"));
+
         yield return new WaitForSeconds(1f);
         countDownText.text = "2";
+        audioSource.PlayOneShot(clips.FirstOrDefault(c => c.name == "count"));
+
         yield return new WaitForSeconds(1f);
         countDownText.text = "1";
+        audioSource.PlayOneShot(clips.FirstOrDefault(c => c.name == "count"));
+
+        yield return new WaitForSeconds(1f);
+        countDownText.text = "Go!";
+        audioSource.PlayOneShot(clips.FirstOrDefault(c => c.name == "count"));
+        LevelManager.RoundOver = false;
+
         yield return new WaitForSeconds(1f);
         countDownText.text = "";
-
-        LevelManager.RoundOver = false;
     }
 
     private IEnumerator NextRound()

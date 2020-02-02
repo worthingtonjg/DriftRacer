@@ -118,11 +118,22 @@ MonoBehaviour:
   Explosion: {fileID: 4986351891419587258, guid: 6eab2b546242f0e458ae67c10afa8ec1,
     type: 3}
   CountDown: {fileID: 0}
+  LapCount: {fileID: 0}
   healthbar: {fileID: 0}
   ammobar: {fileID: 0}
+  PartsCount: {fileID: 0}
+  LifeCount: {fileID: 0}
   damaged: {fileID: 0}
   WeaponPort: {fileID: 9112653328477369840}
   Bullet: {fileID: 8353912737567259379, guid: be1651a58cbfa4b43b31b31d1f0ede1d, type: 3}
+  audioSource: {fileID: 0}
+  clips:
+  - {fileID: 8300000, guid: dc5ee7f3469a28244920b86664d7d61d, type: 3}
+  - {fileID: 8300000, guid: 2d81354a540866a4d92f694a3611b553, type: 3}
+  - {fileID: 8300000, guid: 914914c78c4bd224189bef989e3e2068, type: 3}
+  - {fileID: 8300000, guid: 1de4037e0ca277d4394d09fb264c874a, type: 3}
+  - {fileID: 8300000, guid: 7df2da06a8524294cbbc9cb891b868af, type: 3}
+  - {fileID: 8300000, guid: 03548a12f55367243b257d4c0cc23fea, type: 3}
   maxhealth: 100
   health: 100
   ammo: 5
@@ -132,6 +143,9 @@ MonoBehaviour:
   fireRate: 1
   lastFireTime: 0
   Shooting: 0
+  currentCheckpoint: 0
+  PassedCheckpoints: 
+  lap: 1
 --- !u!54 &7336786159999753033
 Rigidbody:
   m_ObjectHideFlags: 0
