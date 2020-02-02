@@ -14,6 +14,7 @@ public class MainMenuManager : MonoBehaviour
         LevelManager.Player1Powerups = 0;
         LevelManager.Player1Score = 0;
         LevelManager.Player1Parts = 0;
+        LevelManager.Player1Ship = 0;
 
         LevelManager.Player2Life = 20;
         LevelManager.Player2Win = false;
@@ -22,7 +23,8 @@ public class MainMenuManager : MonoBehaviour
         LevelManager.Player2Powerups = 0;
         LevelManager.Player2Score = 0;
         LevelManager.Player2Parts = 0;
-
+        LevelManager.Player2Ship = 0;
+        
         SceneManager.LoadScene("01MainMenuA");
     }
     public void Credits()
